@@ -4,29 +4,34 @@
 #include <stdlib.h>
 
 Estudiante* crearEstudiante(char *nombreEstudiante ,char *apellidoEstudiante , int edadEstudiante ) {
-    Estudiante *nuevoEstudiante = malloc(sizeof(Estudiante));
-    if (nombreEstudiante == "" || apellidoEstudiante == "" || edadEstudiante <= 18 ) {
+    if (strlen(nombreEstudiante) == 0 || srtlen(apellidoEstudiante) == 0 || edadEstudiante <= 18) {
         return NULL;
     }
+    Estudiante *nuevoEstudiante = malloc(sizeof(Estudiante));
+    if (nuevoEstudiante == NULL) return NULL;
+    //comprobaciones de cadenas no vacias y edad valida
+
     strcpy(nuevoEstudiante->nombre, nombreEstudiante);
     strcpy(nuevoEstudiante->apellido, apellidoEstudiante);
     nuevoEstudiante->edad = edadEstudiante;
+    //copiar cadenas
 
-    ListaMaterias *nuevaListaMateriasInscriptas = malloc(sizeof(ListaMaterias));
-    nuevaListaMateriasInscriptas->head = NULL;
-    nuevoEstudiante->materiasInscriptas = nuevaListaMateriasInscriptas;
-
-    ListaMaterias *nuevaListaMateriasAprobadas = malloc(sizeof(ListaMaterias));
-    nuevaListaMateriasAprobadas->head = NULL;
-    nuevoEstudiante->materiasAprobadas = nuevaListaMateriasAprobadas;
+    nuevoEstudiante -> materiasInscriptas = malloc(sizeof(ListaMaterias));
+    if (nuevoEstudiante -> materiasInscriptas != NULL){
+        nuevoEstudiante -> materiasInscriptas -> head = NULL;
+    }
     return nuevoEstudiante;
 };
+
+
 void modificarNombreEstudiante(Estudiante *estudiante , char *nombre ){
     strcpy(estudiante->nombre, nombre);
 };
+
 void modificarApellidoEstudiante(Estudiante *estudiante , char *apellido ){
     strcpy(estudiante->apellido, apellido);
 };
+
 void modificarEdad (Estudiante *estudiante , int edad){
     estudiante->edad = edad;
 };
@@ -40,10 +45,12 @@ void mostrarDatos (Estudiante *estudiante){
 };
 
 void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
-    if (materia == NULL || estudiante == NULL ) {
+    if (materia == NULL || estudiante == NULL || estudiante -> materiasInscriptas == NULL) {
         return;
     }  
     NodoMateria *nodoMateria = malloc(sizeof(NodoMateria));
+    if (nodoMateria == NULL) return;
+    
     nodoMateria->materia = materia;
     nodoMateria->siguiente = NULL;
     
@@ -51,15 +58,15 @@ void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
         estudiante->materiasInscriptas->head = nodoMateria;
     }else {
         NodoMateria *nodoIterador = estudiante->materiasInscriptas->head;
-        while (nodoIterador != NULL ){
+        while (nodoIterador -> siguiente != NULL){
             nodoIterador = nodoIterador->siguiente;
         }
         nodoIterador->siguiente = nodoMateria;
     }
 };
 
-void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo ) {
-    if (aprobo == "Aprobo"){
+void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char *aprobo ) {
+    if (strcmp(aprobo, "Aprobo") == 0){
 
     }
 };

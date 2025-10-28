@@ -9,6 +9,8 @@
 ListaEstudiantes *nuevaListaEstudiantes()
 {
     ListaEstudiantes *nuevaLista = malloc(sizeof(ListaEstudiantes));
+    if (nuevaLista == NULL) return NULL;
+    
     nuevaLista->head = NULL;
     nuevaLista->tamanio = 0;
     return nuevaLista;
@@ -16,17 +18,19 @@ ListaEstudiantes *nuevaListaEstudiantes()
 
 void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
 {
-    if (estudiante == NULL)
+    if (estudiante == NULL || lista == NULL)
     {
         return;
     }
     NodoEstudiante *nuevoEstudiante = malloc(sizeof(NodoEstudiante));
     nuevoEstudiante->estudiante = estudiante;
+
     nuevoEstudiante->siguiente = NULL;
-    NodoEstudiante *iteradorEstudiante = lista->head;
-    if (iteradorEstudiante == NULL)
-    {
-        iteradorEstudiante = nuevoEstudiante;
+
+
+
+    if (lista -> head == NULL){
+        lista -> head = nuevoEstudiante;
     }
     else
     {
@@ -38,21 +42,21 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
         iteradorEstudiante->siguiente = nuevoEstudiante;
     }
     lista->tamanio++;
-    free(nuevoEstudiante);
-    free(iteradorEstudiante);
+  
 }
 
 NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
 {
-    if (nombre == "" || apellido == "" || lista->head == NULL)
+    if (strlen(nombre) == 0 || srtlen(apellido) == 0  || lista->head == NULL || lista == NULL) 
     {
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
     }
     NodoEstudiante *iteradorEstudiante = lista->head;
-    while (iteradorEstudiante->siguiente != NULL)
+    
+    while (iteradorEstudiante != NULL)
     {
-        if (iteradorEstudiante->estudiante->nombre == nombre && iteradorEstudiante->estudiante->apellido == apellido)
+        if (strcmp(iteradorEstudiante->estudiante->nombre, nombre) == 0 && strcmp(iteradorEstudiante->estudiante->apellido, apellido == 0))
         {
             printf("Estudiante encontrado!!\n");
             return iteradorEstudiante;
@@ -60,41 +64,49 @@ NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *l
         iteradorEstudiante = iteradorEstudiante->siguiente;
     }
     printf("Error: el estudiante no existe.\n");
-    free(iteradorEstudiante);
     return NULL;
 }
 
 void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
 {
-    if (nombre == "" || apellido == "" || lista->head == NULL)
+    if (strlen(nombre) == 0 || srtlen(apellido) == 0 || lista->head == NULL || lista == NULL)
     {
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
     }
-    NodoEstudiante *estudianteAEliminar = buscarEstudiante(nombre, apellido, lista);
-    if (estudianteAEliminar == NULL)
-    {
-        printf("Error: el estudiante no existe.\n");
-        return NULL;
-    }
-    NodoEstudiante *iteradorEstudiante = lista->head;
-    if (iteradorEstudiante == estudianteAEliminar)
-    {
-        lista->head = estudianteAEliminar->siguiente;
-    }
-    else
-    {
-        while (iteradorEstudiante->siguiente == estudianteAEliminar)
-        {
-            iteradorEstudiante = iteradorEstudiante->siguiente;
+    NodoEstudiante *actual = lista -> head;
+    NodoEstudiante *anterior = NULL;
+
+    while (actual != NULL){
+        if (strcmp(actual -> estudiante -> nombre, nombre) == 0 && 
+        strcmp(actual -> estudiante -> apellido, apellido)== 0){
+            break;
         }
-        iteradorEstudiante->siguiente = estudianteAEliminar->siguiente;
+        anterior = actual;
+        actual = actual -> siguiente;
     }
-    lista->tamanio--;
-    printf("Estudiante \n Nombre: %s\n Apellido: %s\n Edad: %d\n Eliminado!!\n", estudianteAEliminar->estudiante->nombre, estudianteAEliminar->estudiante->apellido, estudianteAEliminar->estudiante->edad);
-    free(iteradorEstudiante);
-    free(estudianteAEliminar);
+
+    if(actual == NULL){
+        printf("Error: el estudiante no existe. \n");
+        return;
+    }
+
+    if(anterior == NULL){
+        lista -> head = actual -> siguiente;
+    }else{
+        anterior -> siguiente = actual -> siguiente;
+    }
+
+    printf("Estudiante \n Nombre: %s\n Apellido: %s\n Edad: %d\n Eliminado!!\n", actual -> estudiante -> nombre,
+    actual -> estudiante -> apellido, actual ->estudiante -> edad);
+    
+    free(actual -> estudiante);
+    free(actual);
+
+    lista -> tamanio--;
 }
+    
+
 
 int cantidadDeAlumnos(ListaEstudiantes *lista)
 {
@@ -103,11 +115,11 @@ int cantidadDeAlumnos(ListaEstudiantes *lista)
 
 void modificarEstudiante(char nombre, char apellido, int edad, Estudiante *estudiante)
 {
-    if (nombre != "" && nombre != estudiante->nombre)
+    if (strlen(nombre) > 0 && strcmp(nombre, estudiante->nombre) != 0)
     {
         modificarNombreEstudiante(estudiante, nombre);
     }
-    if (apellido != "" && apellido != estudiante->apellido)
+    if (strlen(apellido) > 0 && strcmp(apellido, estudiante->apellido) != 0)
     {
         modificarApellidoEstudiante(estudiante, apellido);
     }
@@ -130,12 +142,12 @@ Estudiante **obtenerListaEstudiantes(ListaEstudiantes *lista, int *cantidad) {
     }
     int i = 0 ; 
     NodoEstudiante *iterador = lista->head;
-    while ( iterador == NULL){
-        array[i] = iterador;
+    
+    while ( iterador != NULL){
+        array[i] = iterador -> estudiante;
         iterador = iterador->siguiente;
         i++;
     }
-    free(iterador);
     *cantidad = i ;
     return array;
 }
@@ -145,8 +157,6 @@ void cargarDatosPrueba (ListaEstudiantes *lista) {
     for (int i = 0 ; i < cantidad ; i++) {
         Estudiante *nuevoEstudiante = crearEstudiante(datos[i].nombre , datos[i].apellido , datos[i].edad);
         agregarEstudiante(nuevoEstudiante , lista);
-        free(nuevoEstudiante);
     }
     printf("Datos de prueba cargados correctamente.\n");
-    free(cantidad);
 }  
