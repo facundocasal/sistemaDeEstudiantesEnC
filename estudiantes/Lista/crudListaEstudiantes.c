@@ -42,7 +42,7 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
     free(iteradorEstudiante);
 }
 
-NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
+Estudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
 {
     if (nombre == "" || apellido == "" || lista->head == NULL)
     {
@@ -55,7 +55,7 @@ NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *l
         if (iteradorEstudiante->estudiante->nombre == nombre && iteradorEstudiante->estudiante->apellido == apellido)
         {
             printf("Estudiante encontrado!!\n");
-            return iteradorEstudiante;
+            return iteradorEstudiante->estudiante;
         }
         iteradorEstudiante = iteradorEstudiante->siguiente;
     }

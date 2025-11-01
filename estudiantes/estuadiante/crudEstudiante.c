@@ -8,7 +8,9 @@ Estudiante* crearEstudiante(char *nombreEstudiante ,char *apellidoEstudiante , i
     if (nombreEstudiante == "" || apellidoEstudiante == "" || edadEstudiante <= 18 ) {
         return NULL;
     }
+    
     strcpy(nuevoEstudiante->nombre, nombreEstudiante);
+    
     strcpy(nuevoEstudiante->apellido, apellidoEstudiante);
     nuevoEstudiante->edad = edadEstudiante;
 
