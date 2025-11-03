@@ -1,9 +1,9 @@
 #include <structMateria.h>
 #include <structListaMaterias.h>
 #include <stdlib.h>
-#include "../Lista/crudListaEstudiantes.h"
+#include "estudiantes/Lista/crudListaEstudiantes.h"
 
-Materia *crearMateria(char *nombreDeMateria)
+Materia* crearMateria(char *nombreDeMateria)
 {
     Materia *nuevaMateria = malloc(sizeof(Materia));
     if (nombreDeMateria == "")
@@ -17,7 +17,7 @@ Materia *crearMateria(char *nombreDeMateria)
 
 void modificarMateria(Materia *materia, char *nombre)
 {
-    strcpy(materia->nombre, nombre);
+    strcpy(*materia->nombre, nombre);
 }
 
 void eliminarAlumnoDeMateria(char nombre, char apellido, Materia *materia)

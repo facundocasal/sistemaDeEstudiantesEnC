@@ -1,3 +1,5 @@
+#ifndef STRUCT_LISTAESTUDIANTES_H
+#define STRUCT_LISTAESTUDIANTES_H
 #include "structEstudiante.h"
 
 
@@ -12,3 +14,5 @@ typedef struct ListaEstudiantes
     NodoEstudiante *head;
     int tamanio;
 } ListaEstudiantes;
+
+#endif

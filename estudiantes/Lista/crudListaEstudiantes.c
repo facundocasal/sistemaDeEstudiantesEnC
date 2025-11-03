@@ -1,10 +1,9 @@
 #include "structListaEstudiantes.h"
 #include "structEstudiante.h"
-#include "crudEstudiante.h"
+#include "estudiantes/estudiante/curdEstudiante.h"
 #include "mockListaEstudiantes/mockEstudiantes.c"
 #include <string.h>
 #include <stdlib.h>
-
 
 ListaEstudiantes *nuevaListaEstudiantes()
 {
@@ -30,7 +29,6 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
     }
     else
     {
-        NodoEstudiante *iteradorEstudiante = lista->head;
         while (iteradorEstudiante->siguiente != NULL)
         {
             iteradorEstudiante = iteradorEstudiante->siguiente;
@@ -38,24 +36,22 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
         iteradorEstudiante->siguiente = nuevoEstudiante;
     }
     lista->tamanio++;
-    free(nuevoEstudiante);
-    free(iteradorEstudiante);
 }
 
-Estudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
+NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
 {
-    if (nombre == "" || apellido == "" || lista->head == NULL)
+    if (strlen(nombre) == 0 || strlen(apellido) == 0 || lista->head == NULL)
     {
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
     }
     NodoEstudiante *iteradorEstudiante = lista->head;
-    while (iteradorEstudiante->siguiente != NULL)
+    while (iteradorEstudiante != NULL)
     {
         if (iteradorEstudiante->estudiante->nombre == nombre && iteradorEstudiante->estudiante->apellido == apellido)
         {
             printf("Estudiante encontrado!!\n");
-            return iteradorEstudiante->estudiante;
+            return iteradorEstudiante;
         }
         iteradorEstudiante = iteradorEstudiante->siguiente;
     }
@@ -66,7 +62,7 @@ Estudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista
 
 void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
 {
-    if (nombre == "" || apellido == "" || lista->head == NULL)
+    if (strlen(nombre) == 0 || strlen(apellido) == 0 || lista->head == NULL)
     {
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
@@ -74,7 +70,6 @@ void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
     NodoEstudiante *estudianteAEliminar = buscarEstudiante(nombre, apellido, lista);
     if (estudianteAEliminar == NULL)
     {
-        printf("Error: el estudiante no existe.\n");
         return NULL;
     }
     NodoEstudiante *iteradorEstudiante = lista->head;
@@ -92,7 +87,6 @@ void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
     }
     lista->tamanio--;
     printf("Estudiante \n Nombre: %s\n Apellido: %s\n Edad: %d\n Eliminado!!\n", estudianteAEliminar->estudiante->nombre, estudianteAEliminar->estudiante->apellido, estudianteAEliminar->estudiante->edad);
-    free(iteradorEstudiante);
     free(estudianteAEliminar);
 }
 
@@ -103,11 +97,11 @@ int cantidadDeAlumnos(ListaEstudiantes *lista)
 
 void modificarEstudiante(char nombre, char apellido, int edad, Estudiante *estudiante)
 {
-    if (nombre != "" && nombre != estudiante->nombre)
+    if (strlen(nombre) > 0 && nombre != estudiante->nombre)
     {
         modificarNombreEstudiante(estudiante, nombre);
     }
-    if (apellido != "" && apellido != estudiante->apellido)
+    if (strlen(apellido) > 0 && apellido != estudiante->apellido)
     {
         modificarApellidoEstudiante(estudiante, apellido);
     }
@@ -117,36 +111,90 @@ void modificarEstudiante(char nombre, char apellido, int edad, Estudiante *estud
     }
 }
 
-
-Estudiante **obtenerListaEstudiantes(ListaEstudiantes *lista, int *cantidad) {
-    if (lista == NULL || lista->head == NULL) {
+Estudiante *obtenerListaEstudiantes(ListaEstudiantes *lista, int *cantidad)
+{
+    if (lista == NULL || lista->head == NULL)
+    {
         *cantidad = 0;
         return NULL;
     }
-    Estudiante **array = malloc(sizeof(Estudiante *) * lista->tamanio);
-    if (array == NULL){
+    Estudiante *array = malloc(sizeof(Estudiante) * lista->tamanio);
+    if (array == NULL)
+    {
         *cantidad = 0;
         return NULL;
     }
-    int i = 0 ; 
+    int i = 0;
     NodoEstudiante *iterador = lista->head;
-    while ( iterador == NULL){
-        array[i] = iterador;
+    while (iterador != NULL)
+    {
+        array[i] = *(iterador->estudiante);
         iterador = iterador->siguiente;
         i++;
     }
-    free(iterador);
-    *cantidad = i ;
+    *cantidad = i;
     return array;
 }
-
-void cargarDatosPrueba (ListaEstudiantes *lista) {
+Estudiante *obtenerListaEstudiantesPorRangoDeEdad(int comienzo, int fin, ListaEstudiantes *lista, int *cantidad)
+{
+    if (lista == NULL || lista->head == NULL)
+    {
+        *cantidad = 0;
+        return NULL;
+    }
+    Estudiante *array = malloc(sizeof(Estudiante) * lista->tamanio);
+    if (array == NULL)
+    {
+        *cantidad = 0;
+        return NULL;
+    }
+    int i = 0;
+    NodoEstudiante *iterador = lista->head;
+    while (iterador != NULL)
+    {
+        if (iterador->estudiante->edad >= comienzo && iterador->estudiante->edad <= fin)
+        {
+            array[i] = *(iterador->estudiante);
+            i++;
+        }
+        iterador = iterador->siguiente;
+    }
+    *cantidad = i;
+    return array;
+}
+void cargarDatosDePruebaEstudiantes(ListaEstudiantes *lista)
+{
     int cantidad = sizeof(datos) / sizeof(datos[0]);
-    for (int i = 0 ; i < cantidad ; i++) {
-        Estudiante *nuevoEstudiante = crearEstudiante(datos[i].nombre , datos[i].apellido , datos[i].edad);
-        agregarEstudiante(nuevoEstudiante , lista);
-        free(nuevoEstudiante);
+    for (int i = 0; i < cantidad; i++)
+    {
+        Estudiante *nuevoEstudiante = crearEstudiante(datos[i].nombre, datos[i].apellido, datos[i].edad);
+        agregarEstudiante(nuevoEstudiante, lista);
     }
     printf("Datos de prueba cargados correctamente.\n");
-    free(cantidad);
-}  
+}
+
+void mostrarEstudiantesPaginado(Estudiante *array, int cantidad) {
+    int cantidadEstudiantesPorPagina = 10;
+    int paginaActual = 0;
+    int totalPaginas = (cantidad + cantidadEstudiantesPorPagina - 1) / cantidadEstudiantesPorPagina;
+    char opcion;
+    do {
+        printf("=== Página %d de %d ===\n", paginaActual + 1, totalPaginas);
+        int inicio = paginaActual * cantidadEstudiantesPorPagina;
+        int fin = inicio + cantidadEstudiantesPorPagina;
+        if (fin > cantidad) fin = cantidad;
+        for (int i = inicio; i < fin; i++) {
+            printf("%d) Nombre del Estudiante: %s %s (Edad:%d)  \n", 
+                i + 1, array[i].nombre , array[i].apellido , array[i].edad);
+        }
+        printf("\n(a) anterior | (s) siguiente | (q) salir\n");
+        printf("Seleccione opción: ");
+        scanf(" %c", &opcion);
+
+        if (opcion == 's' && paginaActual < totalPaginas - 1)
+            paginaActual++;
+        else if (opcion == 'a' && paginaActual > 0)
+            paginaActual--;
+
+    } while (opcion != 'q');
+}

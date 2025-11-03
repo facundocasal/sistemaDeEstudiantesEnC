@@ -1,3 +1,6 @@
+#ifndef STRUCT_LISTAMATERIA_H
+#define STRUCT_LISTAMATERIA_H
+
 #include "structMateria.h"
 #include <stdbool.h>
 
@@ -13,3 +16,4 @@ typedef struct ListaMaterias
     int tamanio;
 } ListaMaterias;
 
+#endif
