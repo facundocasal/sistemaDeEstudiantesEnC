@@ -1,9 +1,11 @@
 #include "structListaEstudiantes.h"
-#include "structEstudiante.h"
-#include "estudiantes/estudiante/curdEstudiante.h"
-#include "mockListaEstudiantes/mockEstudiantes.c"
+#include "estudiantes/estudiante/structEstudiante.h"
+#include "crudListaEstudiantes.h"
+#include "estudiantes/estudiante/crudEstudiante.h"
+#include "mockListaEstudiantes/mockEstudiantes.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 ListaEstudiantes *nuevaListaEstudiantes()
 {
@@ -25,7 +27,7 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
     NodoEstudiante *iteradorEstudiante = lista->head;
     if (iteradorEstudiante == NULL)
     {
-        iteradorEstudiante = nuevoEstudiante;
+        lista->head = nuevoEstudiante;
     }
     else
     {
@@ -38,7 +40,7 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
     lista->tamanio++;
 }
 
-NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
+NodoEstudiante *buscarEstudiante(char *nombre, char *apellido, ListaEstudiantes *lista)
 {
     if (strlen(nombre) == 0 || strlen(apellido) == 0 || lista->head == NULL)
     {
@@ -48,7 +50,8 @@ NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *l
     NodoEstudiante *iteradorEstudiante = lista->head;
     while (iteradorEstudiante != NULL)
     {
-        if (iteradorEstudiante->estudiante->nombre == nombre && iteradorEstudiante->estudiante->apellido == apellido)
+        if (strcmp(iteradorEstudiante->estudiante->nombre, nombre) == 0 &&
+    strcmp(iteradorEstudiante->estudiante->apellido, apellido) == 0)
         {
             printf("Estudiante encontrado!!\n");
             return iteradorEstudiante;
@@ -56,21 +59,20 @@ NodoEstudiante *buscarEstudiante(char nombre, char apellido, ListaEstudiantes *l
         iteradorEstudiante = iteradorEstudiante->siguiente;
     }
     printf("Error: el estudiante no existe.\n");
-    free(iteradorEstudiante);
     return NULL;
 }
 
-void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
+void eliminarEstudiante(char *nombre, char *apellido, ListaEstudiantes *lista)
 {
     if (strlen(nombre) == 0 || strlen(apellido) == 0 || lista->head == NULL)
     {
         printf("Error: datos invalidos o lista vacia.\n");
-        return NULL;
+        return;
     }
     NodoEstudiante *estudianteAEliminar = buscarEstudiante(nombre, apellido, lista);
     if (estudianteAEliminar == NULL)
     {
-        return NULL;
+        return;
     }
     NodoEstudiante *iteradorEstudiante = lista->head;
     if (iteradorEstudiante == estudianteAEliminar)
@@ -79,7 +81,7 @@ void eliminarEstudiante(char nombre, char apellido, ListaEstudiantes *lista)
     }
     else
     {
-        while (iteradorEstudiante->siguiente == estudianteAEliminar)
+        while (iteradorEstudiante->siguiente != estudianteAEliminar)
         {
             iteradorEstudiante = iteradorEstudiante->siguiente;
         }
@@ -95,9 +97,9 @@ int cantidadDeAlumnos(ListaEstudiantes *lista)
     return lista->tamanio;
 }
 
-void modificarEstudiante(char nombre, char apellido, int edad, Estudiante *estudiante)
+void modificarEstudiante(char *nombre , char *apellido , int edad  , Estudiante *estudiante)
 {
-    if (strlen(nombre) > 0 && nombre != estudiante->nombre)
+    if (strlen(nombre) > 0 && strcmp(nombre, estudiante->nombre) != 0)
     {
         modificarNombreEstudiante(estudiante, nombre);
     }
@@ -163,11 +165,14 @@ Estudiante *obtenerListaEstudiantesPorRangoDeEdad(int comienzo, int fin, ListaEs
     return array;
 }
 void cargarDatosDePruebaEstudiantes(ListaEstudiantes *lista)
-{
-    int cantidad = sizeof(datos) / sizeof(datos[0]);
-    for (int i = 0; i < cantidad; i++)
+{   
+    for (int i = 0; i < MOCK_CANTIDAD; i++)
     {
-        Estudiante *nuevoEstudiante = crearEstudiante(datos[i].nombre, datos[i].apellido, datos[i].edad);
+        Estudiante *nuevoEstudiante = crearEstudiante(
+            datos[i].nombre,
+            datos[i].apellido,
+            datos[i].edad
+        );
         agregarEstudiante(nuevoEstudiante, lista);
     }
     printf("Datos de prueba cargados correctamente.\n");

@@ -1,8 +1,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "materias/listaMateriasAprobadas/structListaMateriasAprobadas.h"
+#include "structListaMateriasAprobadas.h"
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include "crudListaMateriasAprobadas.h"
 
 ListaMateriasAprobadas* nuevaListaMateriasAprobadas()
 {
@@ -12,7 +15,7 @@ ListaMateriasAprobadas* nuevaListaMateriasAprobadas()
     return nuevaLista;
 };
 
-void agregarNuevaMateriaAprobada(char nombre, int nota, ListaMateriasAprobadas *lista)
+void agregarNuevaMateriaAprobada(const char *nombre, int nota, ListaMateriasAprobadas *lista)
 {
     if (strlen(nombre) == 0 || nota < 4 || nota > 10)
     {
@@ -41,7 +44,7 @@ void agregarNuevaMateriaAprobada(char nombre, int nota, ListaMateriasAprobadas *
     printf("Se agrego nueva materia aprobada");
 }
 
-NodoMateriaAprobada *obtenerListaMaterias(ListaMateriasAprobadas *lista, int *cantidad)
+NodoMateriaAprobada *obtenerListaMateriasAprobadas(ListaMateriasAprobadas *lista, int *cantidad)
 {
     if (lista == NULL || lista->head == NULL)
     {
@@ -66,7 +69,7 @@ NodoMateriaAprobada *obtenerListaMaterias(ListaMateriasAprobadas *lista, int *ca
     return array;
 }
 
-NodoMateriaAprobada *buscarMateriaAprobada(char nombreMateria, ListaMateriasAprobadas *lista)
+NodoMateriaAprobada *buscarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista)
 {
     if (strlen(nombreMateria) == 0 || lista->head == NULL)
     {
@@ -76,7 +79,8 @@ NodoMateriaAprobada *buscarMateriaAprobada(char nombreMateria, ListaMateriasApro
     NodoMateriaAprobada *iterador = lista->head;
     while (iterador != NULL)
     {
-        if (nombreMateria == iterador->nombreMateria)
+
+        if (strcmp(nombreMateria , iterador->nombreMateria ) == 0)
         {
             printf("Materia encontrada");
             return iterador;
@@ -87,7 +91,7 @@ NodoMateriaAprobada *buscarMateriaAprobada(char nombreMateria, ListaMateriasApro
     return NULL;
 }
 
-void eliminarMateriaAprobada(char nombreMateria, ListaMateriasAprobadas *lista)
+void eliminarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista)
 {
     if (strlen(nombreMateria) == 0  || lista->head == NULL)
     {
@@ -117,13 +121,14 @@ void eliminarMateriaAprobada(char nombreMateria, ListaMateriasAprobadas *lista)
     }
 }
 
-bool modificarNotaDeMateriaAprobada ( int nota , char nombreMateria  , ListaMateriasAprobadas *lista){
+bool modificarNotaDeMateriaAprobada(int nota, char *nombreMateria, ListaMateriasAprobadas *lista){
     NodoMateriaAprobada *materiaAModificar = buscarMateriaAprobada(nombreMateria, lista);
     if (nota >= 4){
         materiaAModificar->nota = nota;
     }else{
         eliminarMateriaAprobada(nombreMateria , lista);
     }
+    return 1;
 }
 int obternerCantidadMateriasArpobadas ( ListaMateriasAprobadas *lista){
     return lista->tamanio;
@@ -131,7 +136,7 @@ int obternerCantidadMateriasArpobadas ( ListaMateriasAprobadas *lista){
 
 float obternerPromedio (ListaMateriasAprobadas *lista) {
     if (obternerCantidadMateriasArpobadas(lista) == 0){
-        return 0;
+        return 0.0;
     }
     int suma = 0;
     NodoMateriaAprobada *iterador = malloc(sizeof(NodoMateriaAprobada));
@@ -170,11 +175,10 @@ void mostrarMateriasAprobadasPaginado(NodoMateriaAprobada *array, int cantidad) 
     } while (opcion != 'q');
 }
 void cargarDatosDePruebaMateriasAprobadas(ListaMateriasAprobadas *lista) {
-    const char materias[] = {"Matematica", "Fisica", "Programacion", "Informatica"};
+    const char *materias[] = {"Matematica", "Fisica", "Programacion", "Informatica"};
     int notas[] = {8, 6, 9, 7};
-    bool condiciones[] = {true, true, true, true};
     int cantidad = sizeof(materias) / sizeof(materias[0]);
     for (int i = 0; i < cantidad; i++) {
-        agregarMateriaAprobada(lista, materias[i], notas[i], condiciones[i]);
+        agregarNuevaMateriaAprobada(materias[i], notas[i], lista);
     }
 }

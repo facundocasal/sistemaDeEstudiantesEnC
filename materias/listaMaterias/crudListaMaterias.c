@@ -1,7 +1,10 @@
-#include <structListaMaterias.h>
 #include <stdlib.h>
+#include "structListaMaterias.h"
 #include "materias/materia/crudMateria.h"
-
+#include "crudListaMaterias.h"
+#include "materias/listaMaterias/structListaMaterias.h"
+#include <stdio.h>
+#include <string.h>
 ListaMaterias *nuevaListaMaterias()
 {
     ListaMaterias *nuevaLista = malloc(sizeof(ListaMaterias));
@@ -35,7 +38,7 @@ void agregarNuevaMateria(Materia *materia, ListaMaterias *lista)
     lista->tamanio++;
 }
 
-Materia *buscarMateria(char nombreDeMateria, ListaMaterias *lista)
+NodoMateria *buscarMateria(char *nombreDeMateria, ListaMaterias *lista)
 {
     if (lista->tamanio == 0 || strlen(nombreDeMateria) == 0)
     {
@@ -46,17 +49,17 @@ Materia *buscarMateria(char nombreDeMateria, ListaMaterias *lista)
     iteradorMateria = lista->head;
     while (iteradorMateria != NULL)
     {
-        if (iteradorMateria->materia->nombre == nombreDeMateria)
+        if (strcmp(iteradorMateria->materia->nombre, nombreDeMateria) == 0)
         {
             printf("Materia encontrada!!\n");
-            return iteradorMateria->materia;
+            return iteradorMateria;
         }
         iteradorMateria = iteradorMateria->siguiente;
     }
     printf("Error: La materia no existe.\n");
     return NULL;
 }
-Materia *ModificarMateriaLista(char nuevoNombre, Materia *materia)
+Materia *ModificarMateriaLista(char *nuevoNombre, Materia *materia)
 {
     if (strlen(nuevoNombre) == 0 || materia == NULL)
     {
@@ -67,7 +70,7 @@ Materia *ModificarMateriaLista(char nuevoNombre, Materia *materia)
     return materia;
 }
 
-void eliminarMateria(char nombreDeMateria, ListaMaterias *lista)
+void eliminarMateria(char *nombreDeMateria, ListaMaterias *lista)
 {
     if (lista->tamanio == 0 || strlen(nombreDeMateria) == 0)
     {

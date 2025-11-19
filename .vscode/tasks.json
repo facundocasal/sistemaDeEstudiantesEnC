@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Proyecto Estudiantes",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-g",
+
+                // === INCLUDE PATHS ===
+                "-I.",
+                "-Iestudiantes/estudiante",
+                "-Iestudiantes/Lista",
+                "-Iestudiantes/Lista/mockListaEstudiantes",
+                "-Imaterias/materia",
+                "-Imaterias/listaMaterias",
+                "-Imaterias/listaMateriasAprobadas",
+
+                // === ARCHIVOS A COMPILAR ===
+                "main.c",
+                "estudiantes/estudiante/crudEstudiante.c",
+                "estudiantes/Lista/crudListaEstudiantes.c",
+                "estudiantes/Lista/mockListaEstudiantes/mockEstudiantes.c",
+                "materias/materia/crudMateria.c",
+                "materias/listaMaterias/crudListaMaterias.c",
+                "materias/listaMateriasAprobadas/crudListaMateriasAprobadas.c",
+
+                // === SALIDA ===
+                "-o",
+                "sistema.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

@@ -1,14 +1,17 @@
 #include "structEstudiante.h"
-#include "materias/listaMaterias/structListaMaterias.h"
-#include "materias/listaMaterias/crudListaMaterias.h"
-#include "materias/listaMateriasAprobadas/structListaMateriasAprobadas.h"
-#include "materias/listaMateriasAprobadas/crudListaMateriasAprobadas.h"
+#include "crudEstudiante.h"
+#include "../../materias/materia/structMateria.h"
+#include "../../materias/listaMaterias/structListaMaterias.h"
+#include "../../materias/listaMaterias/crudListaMaterias.h"
+#include "../../materias/listaMateriasAprobadas/structListaMateriasAprobadas.h"
+#include "../../materias/listaMateriasAprobadas/crudListaMateriasAprobadas.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 Estudiante* crearEstudiante(char *nombreEstudiante ,char *apellidoEstudiante , int edadEstudiante ) {
     Estudiante *nuevoEstudiante = malloc(sizeof(Estudiante));
-    if (strlen(nombreEstudiante) == 0 || strlen(apellidoEstudiante) == 0 || edadEstudiante <= 18 ) {
+    if (strlen(nombreEstudiante) == 0 || strlen(apellidoEstudiante) == 0 || edadEstudiante < 18 ) {
         return NULL;
     } 
     strcpy(nuevoEstudiante->nombre, nombreEstudiante);
@@ -29,7 +32,6 @@ void modificarEdad (Estudiante *estudiante , int edad){
 };
 void mostrarDatos (Estudiante *estudiante){
     if (estudiante == NULL) {
-        printf("Error: el estudiante no existe.\n");
         return;
     }
     printf("Nombre: %s\n Apellido: %s\n Edad: %d\n" , estudiante->nombre , estudiante->apellido , estudiante->edad);
@@ -52,6 +54,4 @@ void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
         nodoIterador->siguiente = nodoMateria;
     }
 };
-void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo ) {
-
-};
+//void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo ) {};

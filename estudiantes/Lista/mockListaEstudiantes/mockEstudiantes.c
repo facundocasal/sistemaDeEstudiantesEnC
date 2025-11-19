@@ -1,10 +1,8 @@
-typedef struct {
-    char *nombre;
-    char *apellido;
-    int edad;
-} DatosEstudiante;
+#include "mockEstudiantes.h"
 
-DatosEstudiante datos[20] = {
+
+
+MockEstudiante datos[] = {
     {"Facundo", "Casal", 22},
     {"Ariel", "Gomez", 25},
     {"Lucia", "Perez", 20},

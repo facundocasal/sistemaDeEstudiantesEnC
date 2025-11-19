@@ -1,11 +1,10 @@
 #ifndef STRUCT_ESTUDIANTE_H
 #define STRUCT_ESTUDIANTE_H
 
-#include "materias/listaMaterias/structListaMaterias.h"
-#include "materias/listaMateriasAprobadas/structListaMateriasAprobadas.h"
+typedef struct ListaMateriasAprobadas ListaMateriasAprobadas;
+typedef struct ListaMaterias ListaMaterias;
 
-
-typedef struct {
+typedef struct Estudiante{
     char nombre[20];
     char apellido[20];
     int edad;
@@ -14,3 +13,4 @@ typedef struct {
 } Estudiante;
 
 #endif
+
