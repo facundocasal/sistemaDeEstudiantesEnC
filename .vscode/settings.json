@@ -1,0 +1,10 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "crudestudiante.h": "c",
+        "crudlistaestudiantes.h": "c",
+        "structestudiante.h": "c",
+        "structlistaestudiantes.h": "c",
+        "mockestudiantes.h": "c"
+    }
+}

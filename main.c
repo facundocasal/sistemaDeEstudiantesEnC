@@ -9,6 +9,8 @@
 // crud 
 #include "estudiantes/estudiante/crudEstudiante.h"
 #include "estudiantes/Lista/crudListaEstudiantes.h"
+#include "estudiantes/estudiante/crudEstudiante.h"
+#include "materias/listaMaterias/crudListaMaterias.h"
 // mock 
 #include "estudiantes/Lista/mockListaEstudiantes/mockEstudiantes.h"
 
@@ -16,65 +18,262 @@
 
 
 int main() {
+    int opcion = 0;
+    char buffer[100];
+    ListaEstudiantes* listaEstudiantes = nuevaListaEstudiantes();
+    ListaMaterias* listaMaterias = nuevaListaMaterias();
 
-    ListaEstudiantes *lista = nuevaListaEstudiantes();
+    while (opcion != 3) {
+        printf("---------------------\n");
+        printf("MENU\n");
+        printf("Elegir Opcion\n");
+        printf("1. Menu Estudiante\n");
+        printf("2. Menu Materias\n");
+        printf("3. Salir\n");
+        printf("---------------------\n");
+        printf("Opcion: ");
 
-    // Cargar datos mock
-    printf("Cargando datos de prueba...\n");
-    cargarDatosDePruebaEstudiantes(lista);
-    printf("Cantidad de estudiantes cargados: %d\n\n", cantidadDeAlumnos(lista));
+      if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            if (sscanf(buffer, "%d", &opcion) != 1) {
+                printf("Debe ingresar un número!\n");
+                opcion = 0;
+                continue;
+            }
+        }    
 
-    // === MOSTRAR TODOS LOS ESTUDIANTES ===
-    printf("\n==== LISTA COMPLETA DE ESTUDIANTES ====\n");
-    int cantTotal = 0;
-    Estudiante *todos = obtenerListaEstudiantes(lista, &cantTotal);
-    for (int i = 0; i < cantTotal; i++) {
-        printf("%d) %s %s (Edad: %d)\n", 
-            i+1, todos[i].nombre, todos[i].apellido, todos[i].edad);
+        switch (opcion) {
+            case 1:
+            int OpcionDeMenuAlumno = 0;
+            while (OpcionDeMenuAlumno != 7)
+            {
+                    printf("---------------------\n");
+                    printf("Menu Alumno\n");
+                    printf("---------------------\n");
+                    printf("1. Crear Estudiante\n");
+                    printf("2. Modificar Nombre\n");
+                    printf("3. Modificar Apellido\n");
+                    printf("4. Modificar Edad\n");
+                    printf("5. Mostrar Datos\n");
+                    printf("6. Inscribir a Materia\n");
+                    printf("7. Salir\n");
+
+                    printf("Elegir opcion: \n");
+                    scanf("%d", &OpcionDeMenuAlumno);
+                    while(getchar() != '\n'); // limpiar buffer
+
+                switch (OpcionDeMenuAlumno)
+                {
+                case 1:
+                    printf("crearEstudiante\n");
+                    char nombre[50];
+                    char apellido[50];
+                    int edad;
+
+                    printf("Nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+                    
+                    printf("Apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                    printf("Edad del estudiante: ");
+                    scanf("%d", &edad);
+                    while(getchar() != '\n');
+
+                    Estudiante* estudiante = crearEstudiante(nombre, apellido, edad);
+
+                    if(estudiante == NULL){
+                        printf("Datos inválidos. El estudiante no se pudo crear.\n");
+                    } else {
+                        printf("Estudiante creado correctamente:\n");
+                        printf("Nombre: %s\n", estudiante->nombre);
+                        printf("Apellido: %s\n", estudiante->apellido);
+                        printf("Edad: %d\n", estudiante->edad);
+                        agregarEstudiante(estudiante, listaEstudiantes);
+                    }
+                    break;
+                case 2: {
+                    printf("Modificar nombre de estudiante\n");
+                    
+                    char nombre[50];
+                    char apellido[50];
+
+                    printf("Ingrese el nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+                    
+                    printf("Ingrese el apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                   NodoEstudiante* nodoSeleccionado = buscarEstudiante(nombre, apellido, listaEstudiantes);
+                    if (nodoSeleccionado == NULL) {
+                        
+                        printf("No se encontró el estudiante.\n");
+                    } else 
+                    {
+                        char nuevoNombre[50];
+                        printf("Ingrese el nuevo nombre: ");
+                        fgets(nuevoNombre, sizeof(nuevoNombre), stdin);
+                        nuevoNombre[strcspn(nuevoNombre, "\n")] = 0; // quitar salto de línea
+
+                        modificarNombreEstudiante(nodoSeleccionado->estudiante, nuevoNombre);
+                        printf("Nombre modificado correctamente: %s\n",nodoSeleccionado->estudiante->nombre);
+                    }
+                    break;
+                    }
+                case 3:{
+                    printf("Modificar apellido del estudiante\n");
+                    char nombre[50];
+                    char apellido[50];
+
+                    printf("Ingrese el nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+                    
+                    printf("Ingrese el apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                     NodoEstudiante* nodoSeleccionado = buscarEstudiante(nombre, apellido, listaEstudiantes);
+                    if (nodoSeleccionado == NULL) {
+                        
+                        printf("No se encontró el estudiante.\n");
+                    } else 
+                    {
+                        char nuevoApellido[50];
+                        printf("Ingrese el nuevo Apellido: ");
+                        fgets(nuevoApellido, sizeof(nuevoApellido), stdin);
+                        nuevoApellido[strcspn(nuevoApellido, "\n")] = 0; // quitar salto de línea
+
+                        modificarApellidoEstudiante(nodoSeleccionado->estudiante, nuevoApellido);
+                        printf("Apellido modificado correctamente: %s\n",nodoSeleccionado->estudiante->apellido);
+                    }
+                    printf("Apellido: %s", estudiante->apellido);
+                    break;
+                }
+                case 4:{
+                    printf("Modificar edad del estudiante\n");
+                    char nombre[50];
+                    char apellido[50];
+
+                    printf("Ingrese el nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+                    
+                    printf("Ingrese el apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                     NodoEstudiante* nodoSeleccionado = buscarEstudiante(nombre, apellido, listaEstudiantes);
+                    if (nodoSeleccionado == NULL) {
+                        
+                        printf("No se encontró el estudiante.\n");
+                    } else 
+                    {
+                        int nuevaEdad;
+                        printf("Ingrese la nueva edad: ");
+                        scanf("%d", &nuevaEdad);
+                        while(getchar() != '\n');
+
+                        modificarEdad(nodoSeleccionado->estudiante, nuevaEdad);
+                        printf("Edad modificada correctamente: %d\n",nodoSeleccionado->estudiante->edad);
+                    }
+                    break;
+                }
+                case 5:{
+                    printf("Mostrar Datos\n");
+                    char nombre[50];
+                    char apellido[50];
+
+                    printf("Ingrese el nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+
+                    printf("Ingrese el apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                    NodoEstudiante* nodoSeleccionado = buscarEstudiante(nombre, apellido, listaEstudiantes);
+
+                    if (nodoSeleccionado == NULL)
+                    {
+                        printf("No se encontró el estudiante.\n");
+                    } else {
+                        mostrarDatos(nodoSeleccionado->estudiante);
+                    }
+                    break;
+                }
+                    
+                case 6:{
+                    printf("Inscribir estudiante a materia\n");
+                    char nombre[50];
+                    char apellido[50];
+                    char nombreMateria[50];
+
+                    printf("Ingrese el nombre del estudiante: ");
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = 0;
+
+                    printf("Ingrese el apellido del estudiante: ");
+                    fgets(apellido, sizeof(apellido), stdin);
+                    apellido[strcspn(apellido, "\n")] = 0;
+
+                    NodoEstudiante* nodoSeleccionado = buscarEstudiante(nombre, apellido, listaEstudiantes);
+
+                    if (nodoSeleccionado == NULL) {
+                        printf("No se encontró el estudiante.\n");
+                        break;
+                    }
+
+                    printf("Ingrese el nombre de la materia: ");
+                    fgets(nombreMateria, sizeof(nombreMateria), stdin);
+                    nombreMateria[strcspn(nombreMateria, "\n")] = 0;
+
+                    NodoMateria* nodoMateria = buscarMateria(nombreMateria, listaMaterias);
+                    if (nodoMateria == NULL) {
+                        printf("No se encontró la materia.\n");
+                        break;
+                    }
+
+                    inscribirEstudianteAMateria(nodoSeleccionado->estudiante, nodoMateria->materia);
+                    printf("Estudiante %s %s inscripto en la materia %s correctamente.\n",
+                        nodoSeleccionado->estudiante->nombre,
+                        nodoSeleccionado->estudiante->apellido,
+                        nodoMateria->materia->nombre
+                    );
+
+
+                    break;
+                }
+                  
+                case 7:
+                printf("Saliendo del Menu de Alumnos.\n");
+                break;
+
+                default:
+                printf("Opcion incorrecta\n");
+                
+                }
+            }
+             
+            break;
+            case 2:
+            printf("---------------------\n");
+            printf("Menu Materias\n");
+            printf("---------------------\n");
+            
+            break;
+
+            case 3:
+            printf("Saliendo...\n");
+            break;
+
+            default:
+            printf("Opcion Incorrecta\n");
+        }
     }
-
-    // === BUSCAR ESTUDIANTE ===
-    printf("\n=== BUSCAR ESTUDIANTE ===\n");
-    NodoEstudiante *buscado = buscarEstudiante("Facundo", "Casal", lista);
-    if (buscado != NULL) {
-        mostrarDatos(buscado->estudiante);
-    }
-
-    // === MODIFICAR ESTUDIANTE ===
-    printf("\n=== MODIFICAR ESTUDIANTE (Facundo) ===\n");
-    if (buscado != NULL) {
-        modificarEstudiante("Facu", "Casal", 30, buscado->estudiante);
-        mostrarDatos(buscado->estudiante);
-    }
-
-    // === ELIMINAR ESTUDIANTE ===
-    printf("\n=== ELIMINAR ESTUDIANTE (Ariel Gomez) ===\n");
-    eliminarEstudiante("Ariel", "Gomez", lista);
-    printf("Cantidad total de estudiantes ahora: %d\n", cantidadDeAlumnos(lista));
-
-    // === BUSCAR ESTUDIANTES POR RANGO DE EDAD ===
-    printf("\n=== ESTUDIANTES ENTRE 20 Y 22 ANIOS ===\n");
-    int cantRango = 0;
-    Estudiante *rango = obtenerListaEstudiantesPorRangoDeEdad(20, 22, lista, &cantRango);
-    for (int i = 0; i < cantRango; i++) {
-        printf("%d) %s %s (Edad: %d)\n", 
-            i+1, rango[i].nombre, rango[i].apellido, rango[i].edad);
-    }
-
-    // === PAGINADO ===
-    printf("\n=== MOSTRAR PAGINADO ===\n");
-    mostrarEstudiantesPaginado(todos, cantTotal);
-
-    // === INSCRIBIR MATERIA ===
-    printf("\n=== INSCRIBIR MATERIA (si tenés materias cargadas) ===\n");
-    // Solo ejemplo si tenés crearMateria
-    // Materia* m1 = crearMateria("Matematica", 1);
-    // inscribirEstudianteAMateria(buscado->estudiante, m1);
-
-    // === LIBERAR ===
-    free(todos);
-    free(rango);
-    free(lista);
 
     return 0;
 }

@@ -45,8 +45,7 @@ NodoMateria *buscarMateria(char *nombreDeMateria, ListaMaterias *lista)
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
     }
-    NodoMateria *iteradorMateria = malloc(sizeof(NodoMateria));
-    iteradorMateria = lista->head;
+    NodoMateria *iteradorMateria = lista->head;
     while (iteradorMateria != NULL)
     {
         if (strcmp(iteradorMateria->materia->nombre, nombreDeMateria) == 0)

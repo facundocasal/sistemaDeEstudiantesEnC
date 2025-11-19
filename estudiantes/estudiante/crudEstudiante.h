@@ -1,5 +1,6 @@
 #include "structEstudiante.h"
 #include "../../materias/materia/structMateria.h"
+
 Estudiante* crearEstudiante(char *nombreEstudiante ,char *apellidoEstudiante , int edadEstudiante ) ;
 void modificarNombreEstudiante(Estudiante *estudiante , char *nombre );
 void modificarApellidoEstudiante(Estudiante *estudiante , char *apellido );
