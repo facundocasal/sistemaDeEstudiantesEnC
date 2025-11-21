@@ -6,6 +6,8 @@
         "structestudiante.h": "c",
         "structlistaestudiantes.h": "c",
         "mockestudiantes.h": "c",
-        "crudlistamaterias.h": "c"
+        "crudlistamaterias.h": "c",
+        "crudmateria.h": "c",
+        "structmateria.h": "c"
     }
 }

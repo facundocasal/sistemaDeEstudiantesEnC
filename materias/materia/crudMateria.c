@@ -49,17 +49,15 @@ Estudiante *buscarEstudiantePorNombre(Estudiante *estudiante, Materia *materia)
     {
         return NULL;
     }
-    printf("PRUEBA", materia->estudiantesInscriptos);
-    NodoEstudiante *estudianteEncontrado = buscarEstudiante(estudiante->nombre, estudiante->apellido, materia->estudiantesInscriptos);
-    
-    return estudianteEncontrado->estudiante;
-}
 
-void buscarEstudiantesPorEdad(int edad, Materia *materia){
-    if (materia == NULL || edad < 0 || edad > 100){
-        return;
-    }
-    
-}
+    printf("PRUEBA %d\n", materia->estudiantesInscriptos->tamanio);
+
+    NodoEstudiante *estudianteEncontrado =
+        buscarEstudiante(estudiante->nombre, estudiante->apellido, materia->estudiantesInscriptos);
+
+    if (estudianteEncontrado == NULL) return NULL;
+
+    return estudianteEncontrado->estudiante;
+};
 
 // void rendirMateria();

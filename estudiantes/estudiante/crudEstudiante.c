@@ -30,12 +30,29 @@ void modificarApellidoEstudiante(Estudiante *estudiante , char *apellido ){
 void modificarEdad (Estudiante *estudiante , int edad){
     estudiante->edad = edad;
 };
-void mostrarDatos (Estudiante *estudiante){
+void mostrarDatos(Estudiante *estudiante) {
     if (estudiante == NULL) {
         return;
     }
 
-    printf("Nombre: %s\n Apellido: %s\n Edad: %d\n Materias Inscriptas: %s\n" , estudiante->nombre , estudiante->apellido , estudiante->edad, estudiante->materiasInscriptas);
+    printf("Nombre: %s\n", estudiante->nombre);
+    printf("Apellido: %s\n", estudiante->apellido);
+    printf("Edad: %d\n", estudiante->edad);
+
+    printf("Materias inscriptas: %d\n", estudiante->materiasInscriptas->tamanio);
+
+    NodoMateria *actual = estudiante->materiasInscriptas->head;
+
+    if (actual == NULL) {
+        printf(" - No tiene materias inscriptas.\n");
+        return;
+    }
+
+    printf("Lista de materias inscriptas:\n");
+    while (actual != NULL) {
+        printf(" - %s\n", actual->materia->nombre);
+        actual = actual->siguiente;
+    }
 };
 void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
     if (materia == NULL || estudiante == NULL ) {
