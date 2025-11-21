@@ -53,14 +53,10 @@ NodoEstudiante *buscarEstudiante(char *nombre, char *apellido, ListaEstudiantes 
         printf("Error: lista vacía.\n");
         return NULL;
     }
-    printf("NOMBRE PRUEBA %s\n", nombre);
-    printf("APELLIDO PRUEBA %s\n", apellido);
-    
 
     NodoEstudiante *iteradorEstudiante = lista->head;
     while (iteradorEstudiante != NULL)
     {
-        printf("PRUEBA ITERADOR %s\n", iteradorEstudiante->estudiante->nombre);
         if (strcmp(iteradorEstudiante->estudiante->nombre, nombre) == 0 &&
             strcmp(iteradorEstudiante->estudiante->apellido, apellido) == 0)
         {

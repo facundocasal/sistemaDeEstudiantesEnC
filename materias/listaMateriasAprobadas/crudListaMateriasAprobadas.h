@@ -6,7 +6,7 @@ NodoMateriaAprobada *obtenerListaMateriasAprobadas(ListaMateriasAprobadas *lista
 NodoMateriaAprobada *buscarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista);
 void eliminarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista);
 bool modificarNotaDeMateriaAprobada(int nota, char *nombreMateria, ListaMateriasAprobadas *lista);
-int obternerCantidadMateriasArpobadas ( ListaMateriasAprobadas *lista);
-float obternerPromedio (ListaMateriasAprobadas *lista);
+int obtenerCantidadMateriasArprobadas ( ListaMateriasAprobadas *lista);
+float obtenerPromedio (ListaMateriasAprobadas *lista);
 void mostrarMateriasAprobadasPaginado(NodoMateriaAprobada *array, int cantidad);
 void cargarDatosDePruebaMateriasAprobadas(ListaMateriasAprobadas *lista);

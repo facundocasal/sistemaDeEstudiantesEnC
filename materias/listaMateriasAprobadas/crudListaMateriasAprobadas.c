@@ -130,24 +130,35 @@ bool modificarNotaDeMateriaAprobada(int nota, char *nombreMateria, ListaMaterias
     }
     return 1;
 }
-int obternerCantidadMateriasArpobadas ( ListaMateriasAprobadas *lista){
+int obtenerCantidadMateriasArprobadas ( ListaMateriasAprobadas *lista){
     return lista->tamanio;
 }
 
-float obternerPromedio (ListaMateriasAprobadas *lista) {
-    if (obternerCantidadMateriasArpobadas(lista) == 0){
-        return 0.0;
+float obtenerPromedio(ListaMateriasAprobadas *lista)
+{
+    int cantidad = obtenerCantidadMateriasArprobadas(lista);
+
+    if (cantidad == 0)
+    {
+        printf("Promedio: 0.00\n");
+        return 0.0f;
     }
+
     int suma = 0;
-    NodoMateriaAprobada *iterador = malloc(sizeof(NodoMateriaAprobada));
-    iterador = lista->head;
+    NodoMateriaAprobada *iterador = lista->head;
+
     while (iterador != NULL)
     {
         suma += iterador->nota;
+        iterador = iterador->siguiente;  // ¡IMPORTANTE!
     }
-    printf("Promedio: %.2f\n", (float)suma / obternerCantidadMateriasArpobadas(lista));
-    return (float)suma / obternerCantidadMateriasArpobadas(lista);
+
+    float promedio = (float)suma / cantidad;
+    printf("Promedio: %.2f\n", promedio);
+
+    return promedio;
 }
+
 
 void mostrarMateriasAprobadasPaginado(NodoMateriaAprobada *array, int cantidad) {
     int cantidadMateriasPorPagina = 10;

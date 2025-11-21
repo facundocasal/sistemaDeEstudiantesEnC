@@ -55,4 +55,27 @@ void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
         nodoIterador->siguiente = nodoMateria;
     }
 };
+
+void mostrarMateriasInscriptas(Estudiante *estudiante)
+{
+    if (estudiante == NULL || estudiante->materiasInscriptas == NULL) {
+        printf("Error: estudiante o lista de materias NULL.\n");
+        return;
+    }
+
+    NodoMateria *actual = estudiante->materiasInscriptas->head;
+
+    if (actual == NULL) {
+        printf("El estudiante no está inscripto en ninguna materia.\n");
+        return;
+    }
+
+    printf("Materias inscriptas de %s %s:\n", estudiante->nombre, estudiante->apellido);
+
+    while (actual != NULL) {
+        printf(" - %s\n", actual->materia->nombre);
+        actual = actual->siguiente;
+    }
+}
+
 //void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo ) {};
