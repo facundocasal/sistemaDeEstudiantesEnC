@@ -5,6 +5,7 @@
         "crudlistaestudiantes.h": "c",
         "structestudiante.h": "c",
         "structlistaestudiantes.h": "c",
-        "mockestudiantes.h": "c"
+        "mockestudiantes.h": "c",
+        "crudlistamaterias.h": "c"
     }
 }

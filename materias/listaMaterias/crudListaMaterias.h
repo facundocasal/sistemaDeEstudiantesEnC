@@ -1,5 +1,7 @@
 #include "../materia/structMateria.h"
 #include "structListaMaterias.h"
+
+
 ListaMaterias *nuevaListaMaterias();
 void agregarNuevaMateria(Materia *materia, ListaMaterias *lista);
 NodoMateria *buscarMateria(char *nombreDeMateria, ListaMaterias *lista);

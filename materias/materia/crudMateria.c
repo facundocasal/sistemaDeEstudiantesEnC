@@ -49,7 +49,9 @@ Estudiante *buscarEstudiantePorNombre(Estudiante *estudiante, Materia *materia)
     {
         return NULL;
     }
+    printf("PRUEBA", materia->estudiantesInscriptos);
     NodoEstudiante *estudianteEncontrado = buscarEstudiante(estudiante->nombre, estudiante->apellido, materia->estudiantesInscriptos);
+    
     return estudianteEncontrado->estudiante;
 }
 

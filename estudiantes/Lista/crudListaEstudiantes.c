@@ -42,16 +42,27 @@ void agregarEstudiante(Estudiante *estudiante, ListaEstudiantes *lista)
 
 NodoEstudiante *buscarEstudiante(char *nombre, char *apellido, ListaEstudiantes *lista)
 {
-    if (strlen(nombre) == 0 || strlen(apellido) == 0 || lista->head == NULL)
+    if (nombre == NULL || apellido == NULL || strlen(nombre) == 0 || strlen(nombre) == 0 )
     {
         printf("Error: datos invalidos o lista vacia.\n");
         return NULL;
     }
+
+      if (lista == NULL)
+    {
+        printf("Error: lista vacía.\n");
+        return NULL;
+    }
+    printf("NOMBRE PRUEBA %s\n", nombre);
+    printf("APELLIDO PRUEBA %s\n", apellido);
+    
+
     NodoEstudiante *iteradorEstudiante = lista->head;
     while (iteradorEstudiante != NULL)
     {
+        printf("PRUEBA ITERADOR %s\n", iteradorEstudiante->estudiante->nombre);
         if (strcmp(iteradorEstudiante->estudiante->nombre, nombre) == 0 &&
-    strcmp(iteradorEstudiante->estudiante->apellido, apellido) == 0)
+            strcmp(iteradorEstudiante->estudiante->apellido, apellido) == 0)
         {
             printf("Estudiante encontrado!!\n");
             return iteradorEstudiante;

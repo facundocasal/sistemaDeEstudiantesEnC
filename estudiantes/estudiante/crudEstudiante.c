@@ -34,7 +34,8 @@ void mostrarDatos (Estudiante *estudiante){
     if (estudiante == NULL) {
         return;
     }
-    printf("Nombre: %s\n Apellido: %s\n Edad: %d\n" , estudiante->nombre , estudiante->apellido , estudiante->edad);
+
+    printf("Nombre: %s\n Apellido: %s\n Edad: %d\n Materias Inscriptas: %s\n" , estudiante->nombre , estudiante->apellido , estudiante->edad, estudiante->materiasInscriptas);
 };
 void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia ){
     if (materia == NULL || estudiante == NULL ) {
