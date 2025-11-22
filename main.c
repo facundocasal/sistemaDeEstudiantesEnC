@@ -559,21 +559,9 @@ void submenuDocenteGestionMaterias(ListaMaterias *listaMaterias)
 
         case 8:
         {
-            int cantidad = 0;
-            Materia *array = obtenerListaMaterias(listaMaterias, &cantidad);
-            if (cantidad == 0 || array == NULL)
-            {
-                printf("No hay materias cargadas.\n");
-                break;
-            }
-            mostrarMateriasPaginado(array, cantidad);
-            free(array);
-            break;
-        }
-
-        case 9:
             printf("Volviendo al menu docente...\n");
             break;
+        }
 
         default:
             printf("Opcion incorrecta.\n");
