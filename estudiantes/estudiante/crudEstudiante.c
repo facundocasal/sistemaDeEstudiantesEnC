@@ -126,4 +126,3 @@ void mostrarMateriasInscriptas(Estudiante *estudiante)
     }
 }
 
-// void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo ) {};

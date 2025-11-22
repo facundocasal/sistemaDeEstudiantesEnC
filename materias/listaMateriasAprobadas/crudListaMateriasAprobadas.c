@@ -150,7 +150,7 @@ float obtenerPromedio(ListaMateriasAprobadas *lista)
     while (iterador != NULL)
     {
         suma += iterador->nota;
-        iterador = iterador->siguiente;  // ¡IMPORTANTE!
+        iterador = iterador->siguiente; 
     }
 
     float promedio = (float)suma / cantidad;

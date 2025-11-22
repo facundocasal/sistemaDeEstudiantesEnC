@@ -3,9 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// =========================
-//  INCLUDES CORRECTOS
-// =========================
 
 
 #include "../materias/materia/structMateria.h"

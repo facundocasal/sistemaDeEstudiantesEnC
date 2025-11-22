@@ -16,7 +16,6 @@
 #include "materias/listaMateriasAprobadas/crudListaMateriasAprobadas.h"
 #include "materias/materia/crudMateria.h"
 
-
 #include "estudiantes/Lista/mockListaEstudiantes/mockEstudiantes.h"
 
 // ===================== Helpers generales =====================
@@ -33,7 +32,7 @@ void leerCadena(const char *mensaje, char *dest, int tam)
     printf("%s", mensaje);
     if (fgets(dest, tam, stdin) != NULL)
     {
-        dest[strcspn(dest, "\n")] = 0; 
+        dest[strcspn(dest, "\n")] = 0;
     }
 }
 
@@ -73,8 +72,6 @@ int main()
 
     ListaEstudiantes *listaEstudiantes = nuevaListaEstudiantes();
     ListaMaterias *listaMaterias = nuevaListaMaterias();
-
-
 
     while (opcion != 3)
     {
@@ -391,13 +388,14 @@ void submenuDocenteGestionEstudiantes(ListaEstudiantes *listaEstudiantes)
 {
     int opcion = 0;
 
-    while (opcion != 4)
+    while (opcion != 5)
     {
         printf("\n---- Gestion de Estudiantes ----\n");
         printf("1. Ver todos los estudiantes (paginado)\n");
         printf("2. Buscar estudiantes por rango de edad\n");
         printf("3. Eliminar estudiante\n");
-        printf("4. Volver\n");
+        printf("4. Cargar datos de prueba de estudiantes\n");
+        printf("5. Volver\n");
 
         opcion = leerEntero("Elegir opcion: ");
 
@@ -426,7 +424,7 @@ void submenuDocenteGestionEstudiantes(ListaEstudiantes *listaEstudiantes)
 
             int cantidad = 0;
             Estudiante *array = obtenerListaEstudiantesPorRangoDeEdad(desde, hasta,
-                                                                       listaEstudiantes, &cantidad);
+                                                                      listaEstudiantes, &cantidad);
             if (cantidad == 0 || array == NULL)
             {
                 printf("No se encontraron estudiantes en ese rango.\n");
@@ -447,10 +445,14 @@ void submenuDocenteGestionEstudiantes(ListaEstudiantes *listaEstudiantes)
             break;
         }
 
-        case 4:
+        case 4:{
+            cargarDatosDePruebaEstudiantes(listaEstudiantes);
+            break;
+        }
+
+        case 5:
             printf("Volviendo al menu docente...\n");
             break;
-
         default:
             printf("Opcion incorrecta.\n");
         }
@@ -463,7 +465,7 @@ void submenuDocenteGestionMaterias(ListaMaterias *listaMaterias)
 {
     int opcion = 0;
 
-    while (opcion != 9)
+    while (opcion != 8)
     {
         printf("\n---- Gestion de Materias ----\n");
         printf("1. Agregar nueva materia\n");
@@ -481,7 +483,6 @@ void submenuDocenteGestionMaterias(ListaMaterias *listaMaterias)
 
         switch (opcion)
         {
-
 
         case 1:
         {

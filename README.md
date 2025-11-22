@@ -174,5 +174,5 @@ Estas limitaciones están documentadas y cumplen con las exigencias del enunciad
 ## 💻 Compilación y Ejecución
 
 ```bash
-gcc -o sistema main.c estudiantes/
+gcc -Wall -Wextra -g -I. -Iestudiantes/estudiante -Iestudiantes/Lista -Iestudiantes/Lista/mockListaEstudiantes -Imaterias/materia -Imaterias/listaMaterias -Imaterias/listaMateriasAprobadas main.c estudiantes/estudiante/crudEstudiante.c estudiantes/Lista/crudListaEstudiantes.c estudiantes/Lista/mockListaEstudiantes/mockEstudiantes.c materias/materia/crudMateria.c materias/listaMaterias/crudListaMaterias.c materias/listaMateriasAprobadas/crudListaMateriasAprobadas.c -o sistema.exe 
 ```

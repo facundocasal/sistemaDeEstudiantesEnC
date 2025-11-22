@@ -8,4 +8,3 @@ void modificarEdad (Estudiante *estudiante , int edad);
 void mostrarDatos (Estudiante *estudiante);
 void inscribirEstudianteAMateria(Estudiante *estudiante , Materia *materia );
 void mostrarMateriasInscriptas(Estudiante *estudiante);
-//void agregarMateriaAprobada(Estudiante *estudiante , Materia *materia , char aprobo );
