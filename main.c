@@ -311,7 +311,6 @@ void submenuEstudianteMaterias(Estudiante *estudiante, ListaMaterias *listaMater
             }
 
             inscribirEstudianteAMateria(estudiante, nodoMat->materia);
-            printf("Inscripcion correcta.\n");
             break;
         }
 

@@ -19,7 +19,7 @@ void agregarNuevaMateriaAprobada(const char *nombre, int nota, ListaMateriasApro
 {
     if (strlen(nombre) == 0 || nota < 4 || nota > 10)
     {
-        printf("Error al agregar nueva materia aprobada");
+        printf("Error al agregar nueva materia aprobada \n");
         return;
     }
     NodoMateriaAprobada *nuevaMateriaAprobada = malloc(sizeof(NodoMateriaAprobada));
@@ -41,7 +41,7 @@ void agregarNuevaMateriaAprobada(const char *nombre, int nota, ListaMateriasApro
         iterador->siguiente = nuevaMateriaAprobada;
     }
     lista->tamanio++;
-    printf("Se agrego nueva materia aprobada");
+    printf("Se agrego nueva materia aprobada\n");
 }
 
 NodoMateriaAprobada *obtenerListaMateriasAprobadas(ListaMateriasAprobadas *lista, int *cantidad)
@@ -73,7 +73,7 @@ NodoMateriaAprobada *buscarMateriaAprobada(char *nombreMateria, ListaMateriasApr
 {
     if (strlen(nombreMateria) == 0 || lista->head == NULL)
     {
-        printf("Error al buscar materia aprobada ");
+        printf("Error al buscar materia aprobada \n");
         return NULL;
     }
     NodoMateriaAprobada *iterador = lista->head;
@@ -82,12 +82,12 @@ NodoMateriaAprobada *buscarMateriaAprobada(char *nombreMateria, ListaMateriasApr
 
         if (strcmp(nombreMateria , iterador->nombreMateria ) == 0)
         {
-            printf("Materia encontrada");
+            printf("Materia encontrada\n");
             return iterador;
         }
         iterador = iterador->siguiente;
     }
-    printf("No pudimos encontrar esa materia");
+    printf("No pudimos encontrar esa materia\n");
     return NULL;
 }
 
@@ -95,7 +95,7 @@ void eliminarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista)
 {
     if (strlen(nombreMateria) == 0  || lista->head == NULL)
     {
-        printf("Error al eliminar materia aprobada ");
+        printf("Error al eliminar materia aprobada\n ");
         return;
     }
     NodoMateriaAprobada *materiaAEliminar = buscarMateriaAprobada(nombreMateria, lista);
@@ -116,7 +116,7 @@ void eliminarMateriaAprobada(char *nombreMateria, ListaMateriasAprobadas *lista)
             iterador->siguiente = materiaAEliminar->siguiente;
         }
         lista->tamanio--;
-        printf("Error al eliminar materia aprobada.");
+        printf("Error al eliminar materia aprobada.\n");
         return;
     }
 }
@@ -171,11 +171,11 @@ void mostrarMateriasAprobadasPaginado(NodoMateriaAprobada *array, int cantidad) 
         int fin = inicio + cantidadMateriasPorPagina;
         if (fin > cantidad) fin = cantidad;
         for (int i = inicio; i < fin; i++) {
-            printf("%d) Nombre de la materia: %s Condición: %s (Nota: %d)\n", 
+            printf("%d) Nombre de la materia: %s Condicion: %s (Nota: %d)\n", 
                 i + 1, array[i].nombreMateria, "Aprobada" , array[i].nota);
         }
         printf("\n(a) anterior | (s) siguiente | (q) salir\n");
-        printf("Seleccione opción: ");
+        printf("Seleccione opcion: ");
         scanf(" %c", &opcion);
 
         if (opcion == 's' && paginaActual < totalPaginas - 1)

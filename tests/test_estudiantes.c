@@ -65,6 +65,8 @@ void test_inscribir_estudiante_en_materia() {
     printf("test_inscribir_estudiante_en_materia OK\n");
 }
 
+void test_inscribir
+
 int main() {
     printf("== INICIANDO TESTS DE ESTUDIANTE ==\n\n");
 

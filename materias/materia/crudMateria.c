@@ -50,8 +50,6 @@ Estudiante *buscarEstudiantePorNombre(Estudiante *estudiante, Materia *materia)
         return NULL;
     }
 
-    printf("PRUEBA %d\n", materia->estudiantesInscriptos->tamanio);
-
     NodoEstudiante *estudianteEncontrado =
         buscarEstudiante(estudiante->nombre, estudiante->apellido, materia->estudiantesInscriptos);
 
@@ -60,4 +58,3 @@ Estudiante *buscarEstudiantePorNombre(Estudiante *estudiante, Materia *materia)
     return estudianteEncontrado->estudiante;
 };
 
-// void rendirMateria();

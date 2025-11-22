@@ -50,7 +50,7 @@ NodoEstudiante *buscarEstudiante(char *nombre, char *apellido, ListaEstudiantes 
 
       if (lista == NULL)
     {
-        printf("Error: lista vacía.\n");
+        printf("Error: lista vacia.\n");
         return NULL;
     }
 
@@ -201,7 +201,7 @@ void mostrarEstudiantesPaginado(Estudiante *array, int cantidad) {
         }
         printf("\n(a) anterior | (s) siguiente | (q) salir\n");
         printf("Seleccione opción: ");
-        scanf(" %c", &opcion);
+        scanf("%c", &opcion);
 
         if (opcion == 's' && paginaActual < totalPaginas - 1)
             paginaActual++;
