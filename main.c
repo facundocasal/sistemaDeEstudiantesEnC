@@ -473,8 +473,7 @@ void submenuDocenteGestionMaterias(ListaMaterias *listaMaterias)
         printf("5. Ver cantidad de materias\n");
         printf("6. Obtener lista de materias (paginado)\n");
         printf("7. Cargar datos de prueba\n");
-        printf("8. Mostrar materias paginado\n");
-        printf("9. Volver\n");
+        printf("8. Volver\n");
 
         opcion = leerEntero("Elegir opcion: ");
 
