@@ -1,7 +1,7 @@
 #include <structMateria.h>
 #include <structListaMaterias.h>
 #include <stdlib.h>
-#include "../../estudiante/structEstudiante.h"
+#include "../../estudiantes/estudiante/structEstudiante.h"
 #include "../../estudiantes/Lista/crudListaEstudiantes.h"
 #include "crudMateria.h"
 #include <stdio.h>
